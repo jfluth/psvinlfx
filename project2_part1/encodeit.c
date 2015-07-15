@@ -5,6 +5,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <time>
 #include "ia32_encode.h"
 
 // globals to aid debug to start

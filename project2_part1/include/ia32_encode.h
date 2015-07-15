@@ -107,3 +107,71 @@ static inline volatile char *build_mov_register_to_register(short mov_size, int 
 			
         return(tgt_addr);
 }
+
+/*** ADDED FUNCTION FOR PROJECT 2 PART I ***/
+static inline volatile char *build_imm_to_regiser(short mov_size, int src_reg, int dest_reg, volatile char *tgt_addr){
+	// for 16 bit mode we need to treat it special because it requires a prefix
+
+	if (mov_size == 2) {
+		(*tgt_addr ++) = PREFIX_16BIT;
+	}
+
+	// now lets look at each size and determine which opcode required
+
+	switch(mov_size)  {
+
+	case 1: 
+		(*(short *) tgt_addr) = (src_reg << 0x8) | (0xb0 + dest_reg);
+		 tgt_addr += BYTE2_OFF;
+		 break;
+
+	case 2:  // can overload this case because same opcode, but already set prefix
+	case 4: 
+		(*(short *) tgt_addr) = (src_reg << 0x8) | (0xb8 + dest_reg);
+		 tgt_addr += BYTE2_OFF;
+		 break;
+
+	default:
+		 fprintf(stderr,"ERROR: Incorrect size (%d) passed in immediate to register move\n", mov_size);
+		 return (NULL);
+
+	}
+			
+        return(tgt_addr);
+
+}
+
+/*** ADDED FUNCTION FOR PROJECT 2 PART I ***/
+static inline volatile char *build_reg_to_memory(short mov_size, int src_reg, int dest_reg, volatile char *tgt_addr){
+	// for 16 bit mode we need to treat it special because it requires a prefix
+
+	if (mov_size == 2) {
+		(*tgt_addr ++) = PREFIX_16BIT;
+	}
+
+	// now lets look at each size and determine which opcode required
+
+	switch(mov_size)  {
+
+	case 1: 
+		(*(short *) tgt_addr) = ((BASE_MODRM) + (dest_reg << REG_SHIFT) + src_reg) << 8 | 0x88;
+		 tgt_addr += BYTE2_OFF;
+		 break;
+
+	case 2:  // can overload this case because same opcode, but already set prefix
+	case 4: 
+		(*(short *) tgt_addr) = ((BASE_MODRM) + (dest_reg << REG_SHIFT) + src_reg) << 8 | 0x89;
+		 tgt_addr += BYTE2_OFF;
+		 break;
+
+	default:
+		 fprintf(stderr,"ERROR: Incorrect size (%d) passed to register to register move\n", mov_size);
+		 return (NULL);
+
+	}
+			
+        return(tgt_addr);
+
+}
+
+
