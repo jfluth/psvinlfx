@@ -53,6 +53,49 @@ int build_instructions() {
 	num_inst++;
 
 	fprintf(stderr,"next ptr is now 0x%lx\n", (long) next_ptr);
+	
+	/************** EDITS START HERE *****************/
+	next_ptr=build_imm_to_regiser(ISZ_4, 0xbabecafe, REG_EBX, next_ptr);
+	num_inst++;
 
+	fprintf(stderr,"next ptr is now 0x%lx\n", (long) next_ptr);
+	
+	next_ptr=build_imm_to_regiser(ISZ_4, 0xbeefface, REG_ECX, next_ptr);
+	num_inst++;
+
+	fprintf(stderr,"next ptr is now 0x%lx\n", (long) next_ptr);
+	
+	next_ptr=build_imm_to_regiser(ISZ_2, 0xfeed, REG_EDX, next_ptr);
+	num_inst++;
+
+	fprintf(stderr,"next ptr is now 0x%lx\n", (long) next_ptr);
+	
+	next_ptr=build_imm_to_regiser(ISZ_1, 0xa5, REG_EAX, next_ptr);
+	num_inst++;
+
+	fprintf(stderr,"next ptr is now 0x%lx\n", (long) next_ptr);
+	
+	/*
+	next_ptr=build_reg_to_memory(ISZ_1, REG_EAX, int dest_reg, next_ptr);
+	num_inst++;
+
+	fprintf(stderr,"next ptr is now 0x%lx\n", (long) next_ptr);
+	
+	next_ptr=build_reg_to_memory(ISZ_2, REG_EBX, int dest_reg, next_ptr);
+	num_inst++;
+
+	fprintf(stderr,"next ptr is now 0x%lx\n", (long) next_ptr);
+	
+	next_ptr=build_reg_to_memory(ISZ_2, REG_ECX, int dest_reg, next_ptr);
+	num_inst++;
+
+	fprintf(stderr,"next ptr is now 0x%lx\n", (long) next_ptr);
+	
+	next_ptr=build_reg_to_memory(ISZ_4, REG_EDX, int dest_reg, next_ptr);
+	num_inst++;
+
+	fprintf(stderr,"next ptr is now 0x%lx\n", (long) next_ptr);
+	*/	
+	
 	return (num_inst);
 }
